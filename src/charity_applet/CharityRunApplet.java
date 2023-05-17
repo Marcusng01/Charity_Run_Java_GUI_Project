@@ -17,7 +17,7 @@ public class CharityRunApplet extends JFrame {
     
     protected String[] formData; 
     protected String categoryData;
-    protected String[] merchandiseData; 
+    protected boolean[] merchandiseData; 
     
     public CharityRunApplet() {
         introPanel = new IntroPanel(this).generate();
@@ -31,7 +31,7 @@ public class CharityRunApplet extends JFrame {
         setSize(700, 700);
         setLocationRelativeTo(null);
 
-        showPanel(0); // Display the first panel
+        showPanel(3); // Display the first panel
 
     }
 

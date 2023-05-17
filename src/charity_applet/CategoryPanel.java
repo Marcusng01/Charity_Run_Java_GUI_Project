@@ -11,6 +11,16 @@ public class CategoryPanel {
     private CharityRunApplet applet;
     private final int NEXT_PANEL_NUMBER = 3;
 	private JPanel[] radio = new JPanel[3];
+	private String[] images = {
+			"image/page3/3km.png",
+			"image/page3/7km.png",
+			"image/page3/10km.png"
+	};
+	private String[] categories = {
+			"3km",
+			"7km",
+			"10km"
+	};
     
     public CategoryPanel(CharityRunApplet a) {
     	applet = a;
@@ -42,16 +52,6 @@ public class CategoryPanel {
     	
     	
     	//Body
-    	String[] images = {
-    			"image/page3/3km.png",
-    			"image/page3/7km.png",
-    			"image/page3/10km.png"
-    	};
-    	String[] categories = {
-    			"3km",
-    			"7km",
-    			"10km"
-    	};
     	JPanel body = new JPanel(new FlowLayout());
     	body.setPreferredSize(new Dimension(600, 500)); 
     	body.setBackground(applet.brightGrey);
@@ -67,8 +67,7 @@ public class CategoryPanel {
             radio[i].add(mapLabel, BorderLayout.WEST);
             
             JRadioButton radioButton = new JRadioButton(categories[i]);
-            radioButton.setBackground(applet.brightGrey);
-            radioButton.setPreferredSize(new Dimension(150, 50));
+
             radioButton.setFont(new Font(Font.DIALOG, Font.BOLD, 30));
             categoryGroup.add(radioButton);
             radio[i].add(radioButton, BorderLayout.EAST);
