@@ -1,7 +1,6 @@
 package charity_applet;
 
 import java.awt.Color;
-import java.awt.Font;
 
 import javax.swing.*;
 
@@ -13,9 +12,12 @@ public class CharityRunApplet extends JFrame {
     protected JPanel categorypanel;
     protected JPanel merchPanel;
     protected JPanel receiptPanel;
-    protected String[] formData; 
     protected Color grey = Color.decode("#cbcdbf");
     protected Color brightGrey = Color.decode("#f0ebe5");
+    
+    protected String[] formData; 
+    protected String categoryData;
+    protected String[] merchandiseData; 
     
     public CharityRunApplet() {
         introPanel = new IntroPanel(this).generate();
@@ -29,8 +31,7 @@ public class CharityRunApplet extends JFrame {
         setSize(700, 700);
         setLocationRelativeTo(null);
 
-        //showPanel(0); // Display the first panel
-        showPanel(0); // Temporarily Display the 3rd panel
+        showPanel(0); // Display the first panel
 
     }
 
