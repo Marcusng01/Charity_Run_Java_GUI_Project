@@ -1,5 +1,7 @@
 package charity_applet;
 
+import java.awt.Color;
+
 import javax.swing.*;
 
 public class CharityRunApplet extends JFrame {
@@ -17,12 +19,16 @@ public class CharityRunApplet extends JFrame {
         merchPanel = new MerchPanel(this).generate();
         categorypanel = new CategoryPanel(this).generate();
         receiptPanel = new ReceiptPanel(this).generate();
-
+        
+    	setTitle("Welcome to Charity Run 2023!");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(600, 400);
+        setSize(700, 700);
         setLocationRelativeTo(null);
+        
 
-        showPanel(0); // Display the first panel
+
+        //showPanel(0); // Display the first panel
+        showPanel(1); //temporarily show form panel
     }
 
     protected void showPanel(int PanelNumber) {
