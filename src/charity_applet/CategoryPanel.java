@@ -13,12 +13,16 @@ public class CategoryPanel {
     public JPanel generate() {
     	JPanel categoryPanel = new JPanel();
     	
+		JButton nextPageButton = createNextButton();
+		categoryPanel.add(nextPageButton);
+		return categoryPanel;
+    }
+    
+	private JButton createNextButton() {
 		JButton nextPageButton = new JButton("Next");
 		nextPageButton.addActionListener( e-> {
 			applet.showPanel(NEXT_PANEL_NUMBER);
 		});
-		
-		categoryPanel.add(nextPageButton);
-		return categoryPanel;
-    }
+	    return nextPageButton;
+	}
 }

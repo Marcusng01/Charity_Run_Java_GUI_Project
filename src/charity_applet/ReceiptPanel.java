@@ -13,12 +13,16 @@ public class ReceiptPanel {
     public JPanel generate() {
     	JPanel receiptPanel = new JPanel();
     	
+		JButton nextPageButton = createNextButton();
+		receiptPanel.add(nextPageButton);
+		return receiptPanel;
+    }
+    
+	private JButton createNextButton() {
 		JButton nextPageButton = new JButton("Next");
 		nextPageButton.addActionListener( e-> {
 			applet.showPanel(NEXT_PANEL_NUMBER);
 		});
-		
-		receiptPanel.add(nextPageButton);
-		return receiptPanel;
-    }
+	    return nextPageButton;
+	}
 }

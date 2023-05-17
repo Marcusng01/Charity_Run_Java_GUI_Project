@@ -13,12 +13,16 @@ public class MerchPanel {
     public JPanel generate() {
     	JPanel merchPanel = new JPanel();
     	
+		JButton nextPageButton = createNextButton();
+		merchPanel.add(nextPageButton);
+		return merchPanel;
+    }
+    
+	private JButton createNextButton() {
 		JButton nextPageButton = new JButton("Next");
 		nextPageButton.addActionListener( e-> {
 			applet.showPanel(NEXT_PANEL_NUMBER);
 		});
-		
-		merchPanel.add(nextPageButton);
-		return merchPanel;
-    }
+	    return nextPageButton;
+	}
 }
