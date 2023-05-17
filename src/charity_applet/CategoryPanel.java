@@ -67,7 +67,7 @@ public class CategoryPanel {
             radio[i].add(mapLabel, BorderLayout.WEST);
             
             JRadioButton radioButton = new JRadioButton(categories[i]);
-
+            radioButton.setBackground(applet.brightGrey);
             radioButton.setFont(new Font(Font.DIALOG, Font.BOLD, 30));
             categoryGroup.add(radioButton);
             radio[i].add(radioButton, BorderLayout.EAST);
@@ -119,6 +119,4 @@ public class CategoryPanel {
 		}
 		return category;
     }
-
-
 }

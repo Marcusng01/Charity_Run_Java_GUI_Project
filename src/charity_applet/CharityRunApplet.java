@@ -14,24 +14,17 @@ public class CharityRunApplet extends JFrame {
     protected JPanel receiptPanel;
     protected Color grey = Color.decode("#cbcdbf");
     protected Color brightGrey = Color.decode("#f0ebe5");
-    
-    protected String[] formData; 
+    protected String[] formData = new String[9];
     protected String categoryData;
-    protected boolean[] merchandiseData; 
+    protected boolean[] merchandiseData = new boolean[7];
     
     public CharityRunApplet() {
-        introPanel = new IntroPanel(this).generate();
-        formPanel = new FormPanel(this).generate();
-        categorypanel = new CategoryPanel(this).generate();
-        merchPanel = new MerchPanel(this).generate();
-        receiptPanel = new ReceiptPanel(this).generate();
-        
     	setTitle("Welcome to Charity Run 2023!");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(700, 700);
         setLocationRelativeTo(null);
 
-        showPanel(3); // Display the first panel
+        showPanel(0); // Display the first panel
 
     }
 
@@ -39,18 +32,23 @@ public class CharityRunApplet extends JFrame {
         getContentPane().removeAll();
         switch (PanelNumber) {
 	        case 0:
+	            introPanel = new IntroPanel(this).generate();
 	        	getContentPane().add(introPanel);
 	            break;
 	        case 1:
+	            formPanel = new FormPanel(this).generate();
 	        	getContentPane().add(formPanel);
 	            break;
 	        case 2:
+	            categorypanel = new CategoryPanel(this).generate();
 	        	getContentPane().add(categorypanel);
 	            break;
 	        case 3:
+	            merchPanel = new MerchPanel(this).generate();
 	        	getContentPane().add(merchPanel);
 	            break;
 	        case 4:
+	            receiptPanel = new ReceiptPanel(this).generate();
 	        	getContentPane().add(receiptPanel);
 	            break;
 	        default:
@@ -61,7 +59,7 @@ public class CharityRunApplet extends JFrame {
         repaint();
     }
     
-    //Function for all panels
+    //Function for first and last panel
     protected JEditorPane createTextBox(String text) {
     	JEditorPane textBox = new JEditorPane();
     	textBox.setContentType("text/html"); // Set content type to HTML
