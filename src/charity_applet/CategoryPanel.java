@@ -4,7 +4,7 @@ import javax.swing.*;
 
 public class CategoryPanel {
     private CharityRunApplet applet;
-    private final int NEXT_PANEL_NUMBER = 4;
+    private final int NEXT_PANEL_NUMBER = 3;
     
     public CategoryPanel(CharityRunApplet a) {
     	applet = a;

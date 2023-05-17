@@ -34,16 +34,10 @@ public class IntroPanel{
     	//Body
     	JPanel body = new JPanel(new FlowLayout());
     	body.setBackground(applet.grey);
-        JEditorPane aboutUsLabel = new JEditorPane();
-        aboutUsLabel.setContentType("text/html"); // Set content type to HTML
-        aboutUsLabel.setEditable(false); // Disable editing
-        aboutUsLabel.setText(aboutUs);
-        aboutUsLabel.setBorder(null);
-        aboutUsLabel.setBackground(applet.grey);
-        aboutUsLabel.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, Boolean.TRUE);
-        aboutUsLabel.setFont(new Font(Font.DIALOG, Font.PLAIN, 20));
-        aboutUsLabel.setPreferredSize(new Dimension(400,200));
-    	body.add(aboutUsLabel);
+        JEditorPane aboutUsTextBox = applet.createTextBox(aboutUs);
+        aboutUsTextBox.setPreferredSize(new Dimension(400,200));
+        aboutUsTextBox.setFont(new Font(Font.DIALOG, Font.PLAIN, 20));
+    	body.add(aboutUsTextBox);
     	introPanel.add(body);
         
     	//Footer
@@ -57,6 +51,8 @@ public class IntroPanel{
     	return introPanel;
     }
 	
+
+    
 	private JButton createNextButton() {
 		JButton nextPageButton = new JButton("Register Now!");
 		nextPageButton.setPreferredSize(new Dimension(200,100));
