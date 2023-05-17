@@ -1,7 +1,5 @@
 package charity_applet;
 
-import java.awt.Color;
-
 import javax.swing.*;
 
 public class CharityRunApplet extends JFrame {
@@ -12,6 +10,7 @@ public class CharityRunApplet extends JFrame {
     protected JPanel merchPanel;
     protected JPanel categorypanel;
     protected JPanel receiptPanel;
+    protected String[] formData; 
 
     public CharityRunApplet() {
         introPanel = new IntroPanel(this).generate();

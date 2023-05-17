@@ -6,8 +6,6 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import javax.swing.*;
-import java.util.HashMap;
-import java.util.Map;
 
 public class FormPanel {
     private final int NEXT_PANEL_NUMBER = 2;
@@ -123,12 +121,11 @@ public class FormPanel {
         return radioPanel;
     }
 
-    private String errorString(Map<String, String> d) {
-    	String error = "Error, Input is invalid for: \n";
-        for (Map.Entry<String, String> entry : d.entrySet()) {
-            if ("".equals(entry.getValue())) {
-            	error += entry.getKey() + "\n";
-            }
+    private String errorString(String[] d) {
+    	String error = "Error, input is invalid for: \n";
+        for (int i = 0; i < 9; i++) {
+        	if (d[i]=="")
+        		error += labels[i] + "\n";
         }
     	return error ;
     	
@@ -137,19 +134,31 @@ public class FormPanel {
     private JButton createNextButton() {
         JButton nextPageButton = new JButton("Next");
         nextPageButton.addActionListener(e -> {
-        	Map<String, String> data = retrieveData();
-        	if(data.containsValue("")){
+        	//Retrieve data and check if it contains empty string
+        	//Empty string means that the input is invalid
+        	String[] data = retrieveData();
+        	boolean containsEmptyString = false;
+        	for (String str : data) {
+        	    if (str.equals("")) {
+        	        containsEmptyString = true;
+        	        break;
+        	    }
+        	}
+        	//If data is invalid, show error message
+        	if(containsEmptyString){
         		JOptionPane.showMessageDialog(null, errorString(data), "Error", JOptionPane.ERROR_MESSAGE);
         	}
+        	//Else save the data into applet go to next panel 
         	else {
+        		applet.formData = data;
                 applet.showPanel(NEXT_PANEL_NUMBER);
         	}
         });
         return nextPageButton;
     }
     
-    private Map<String, String> retrieveData() {
-        Map<String, String> formData = new HashMap<>();
+    private String[] retrieveData() {
+        String[] data = new String[9];
         for (int i = 0; i < 9; i++) {
         	//Check if radio either Male or Female radio button is selected
         	if (i==1) {
@@ -158,11 +167,11 @@ public class FormPanel {
         		JRadioButton femaleButton = (JRadioButton) radioPanel.getComponent(1);
         		
         		if (maleButton.isSelected()) {
-        			formData.put(labels[i],"male");
+        			data[i]=("male");
         		} else if (femaleButton.isSelected()) {
-        			formData.put(labels[i],"female");
+        			data[i]=("female");
         		} else {
-        			formData.put(labels[i],"");
+        			data[i]=("");
         		}
         		
     		}
@@ -172,7 +181,7 @@ public class FormPanel {
         		@SuppressWarnings("unchecked")
 				JComboBox<String> component = (JComboBox<String>) formPanels[i].getComponent(1);
 				JComboBox<String> stateComboBox = component;
-        		formData.put(labels[i],stateComboBox.getSelectedItem().toString() );
+				data[i]=(stateComboBox.getSelectedItem().toString() );
         	}
         	//Check the other text fields
         	else {
@@ -225,10 +234,10 @@ public class FormPanel {
     		            System.out.println("Invalid panel number.");
     		            break;
                 }
-                formData.put(labels[i], text);
+                data[i]=(text);
         	}
         }
-		return formData;
+		return data;
     }
 }
 
