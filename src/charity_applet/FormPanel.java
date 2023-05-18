@@ -13,10 +13,6 @@ public class FormPanel {
     private String[] labels = {
             "FULL NAME",
             "GENDER",
-            "ADDRESS 1",
-            "ADDRESS 2",
-            "CITY",
-            "POSTCODE",
             "STATE",
             "EMAIL",
             "PHONE NUMBER",
@@ -42,7 +38,7 @@ public class FormPanel {
     };
     
     //Stores panels for all forms for data retrieval
-    private JPanel[] formPanels = new JPanel[9];
+    private JPanel[] formPanels = new JPanel[5];
 
     public FormPanel(CharityRunApplet applet) {
         this.applet = applet;
@@ -60,7 +56,7 @@ public class FormPanel {
 
     private JPanel createContainerPanel() {
         JPanel container = new JPanel(new FlowLayout());
-        container.setPreferredSize(new Dimension(300, 600));
+        container.setPreferredSize(new Dimension(300, 400));
         container.setBackground(applet.brightGrey);
 
         // Header
@@ -93,10 +89,11 @@ public class FormPanel {
 
 	private JPanel createBodyPanel() {
 		JPanel body= new JPanel(new FlowLayout());
-		body.setPreferredSize(new Dimension(300, 500));
+		body.setPreferredSize(new Dimension(300, 280));
+		body.setBackground(applet.brightGrey);
 
 		//There are 8 form panels. One for each field
-        for (int i = 0; i < 9; i++) {
+        for (int i = 0; i < 5; i++) {
         	//Create and store form panel in formPanels[] attribute
             formPanels[i] = new JPanel(new FlowLayout());
             formPanels[i].setPreferredSize(new Dimension(300, 50));
@@ -112,7 +109,7 @@ public class FormPanel {
                 //Create radio panel with male and female buttons 
                 JPanel radioPanel = createGenderRadioPanel();
                 formPanels[i].add(radioPanel);
-            } else if (i == 6) {
+            } else if (i == 2) {
             	//Create combo box, get list of Malaysian states from state attribute
                 JComboBox<String> stateComboBox = new JComboBox<>(states);
                 stateComboBox.setPreferredSize(new Dimension(250, 20));
@@ -133,15 +130,15 @@ public class FormPanel {
 	private JPanel createGenderRadioPanel() {
         JPanel radioPanel = new JPanel(new BorderLayout());
         radioPanel.setPreferredSize(new Dimension(200, 20));
-        
-		//Create female radio button
+
+        //Create female radio button
         JRadioButton femaleRadio = new JRadioButton("FEMALE");
         femaleRadio.setPreferredSize(new Dimension(100, 20));
-        
+        femaleRadio.setBackground(applet.brightGrey);
 		//Create male radio button
         JRadioButton maleRadio = new JRadioButton("MALE");
         maleRadio.setPreferredSize(new Dimension(100, 20));
-        
+        maleRadio.setBackground(applet.brightGrey);
         //Add male and female radio button to same group
         ButtonGroup genderGroup = new ButtonGroup();
         genderGroup.add(femaleRadio);
@@ -188,15 +185,15 @@ public class FormPanel {
     }
 
     private String[] retrieveFormData() {
-        String[] data = new String[9];
-        for (int i = 0; i < 9; i++) {
+        String[] data = new String[5];
+        for (int i = 0; i < 5; i++) {
         	//Special case for Gender Radio Button
             if (i == 1) {
             	//Validate and store data from Gender Radio Button
                 data[i] = validateDataRadio();
             } 
         	//Special case for Combo Box
-            else if (i == 6) {
+            else if (i == 2) {
             	//Validate and store data from Combo Box
                 data[i] = validateDataComboBox();
             } 
@@ -221,33 +218,8 @@ public class FormPanel {
 	                text = "";
 	            break;
 	            
-            //ADDRESS 1 and 2
-	        case 2:
-	        case 3:
-	        	//Alphanumeric, spaces, hypens and commas ONLY
-	            if (!text.matches("[a-zA-Z0-9\\s\\-,]+")) {
-	                text = "";
-	            }
-	            break;
-	            
-	        //CITY
-	        case 4:
-	        	//Alphabetical and Spaces ONLY
-	            if (!text.matches("[a-zA-Z\\s]+")) {
-	                text = "";
-	            }
-	            break;
-	            
-	        //POSTCODE
-	        case 5:
-	        	//5 digits ONLY
-	            if (!text.matches("\\d{5}")) {
-	                text = "";
-	            }
-	            break;
-	            
 	        //EMAIL
-	        case 7:
+	        case 3:
 	        	//Must be in the following format ONLY:
 	        	//(Alphanumeric with dots, underscore, percentage, plus, hyphen) @ (Alphanumeric with dots or hyphens) . (2 or more alphabets)
 	        	//Example: user_name.01@gmail.com
@@ -257,7 +229,7 @@ public class FormPanel {
 	            break;
 	            
 		    //PHONE NUMBER
-	        case 8:
+	        case 4:
 	        	//10 or 11 digits ONLY
 	            if (!text.matches("\\d{10,11}")) {
 	                text = "";
@@ -297,7 +269,7 @@ public class FormPanel {
         @SuppressWarnings("unchecked")
         
         //Retrieve combo box
-        JComboBox<String> stateComboBox = (JComboBox<String>) formPanels[6].getComponent(1);
+        JComboBox<String> stateComboBox = (JComboBox<String>) formPanels[2].getComponent(1);
         
         //Retrieve selection and convert to string
         return stateComboBox.getSelectedItem().toString();
@@ -320,7 +292,7 @@ public class FormPanel {
     	//Error message starts with "Error, input is invalid for:\n"
         StringBuilder error = new StringBuilder("Error, input is invalid for:\n");
         //Loop through entire data array, using index
-        for (int i = 0; i < 9; i++) {
+        for (int i = 0; i < 5; i++) {
         	//When missing data is found, 
             if (data[i].isEmpty()) {
             	//append the error message with label corresponding to missing data's index

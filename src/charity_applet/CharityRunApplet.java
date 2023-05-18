@@ -18,7 +18,7 @@ public class CharityRunApplet extends JFrame {
     protected Color grey = Color.decode("#cbcdbf");
     protected Color brightGrey = Color.decode("#f0ebe5");
     protected Color black = Color.decode("#474747");
-    protected String[] formData = new String[9];
+    protected String[] formData = new String[5];
     protected String categoryData;
     protected boolean[] merchandiseData = new boolean[7];
     
@@ -28,7 +28,7 @@ public class CharityRunApplet extends JFrame {
         setSize(700, 700);
         setLocationRelativeTo(null);
 
-        showPanel(0); // Display the first panel
+        showPanel(1); // Display the first panel
 
     }
 

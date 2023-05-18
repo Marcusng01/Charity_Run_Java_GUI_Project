@@ -75,8 +75,8 @@ public class ReceiptPanel {
 
         //retrieve form data
         String name = applet.formData[0];
-        String email = applet.formData[7];
-        String phone = applet.formData[8];
+        String email = applet.formData[3];
+        String phone = applet.formData[4];
         
         //Create header for form data
         JLabel headerLabel = new JLabel("Runner: ");
