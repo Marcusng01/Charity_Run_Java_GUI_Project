@@ -29,94 +29,120 @@ public class CategoryPanel {
     public JPanel generate() {
     	JPanel categoryPanel = new JPanel();
     	categoryPanel.setBackground(applet.grey);
-    	
-    	
-    	//Header
-    	JPanel header = new JPanel(new BorderLayout());
-    	header.setPreferredSize(new Dimension(600, 100));
-    	header.setBackground(applet.grey);
-    	//Label for header
-    	JLabel category = new JLabel("CATEGORY");
-    	category.setFont(new Font(Font.DIALOG, Font.BOLD, 30));
-    	category.setHorizontalAlignment(JLabel.CENTER);
-    	header.add(category, BorderLayout.CENTER);
-    	//Logo
-        ImageIcon logo = new ImageIcon("image/page3/logo.png");
-        JLabel logoLabel = new JLabel(logo);
-        header.add(logoLabel, BorderLayout.EAST);
-        //spacer to make "CATEGORY" appear in the middle
-        JLabel spacer = new JLabel();
-        spacer.setPreferredSize(new Dimension(logo.getIconWidth(), logo.getIconHeight()));
-        header.add(spacer, BorderLayout.WEST);
-    	categoryPanel.add(header);
-    	
+
+    	//Header (create using applet function)
+        JPanel header = applet.createHeaderPanel("CATEGORY");
+        categoryPanel.add(header);
     	
     	//Body
-    	JPanel body = new JPanel(new FlowLayout());
-    	body.setPreferredSize(new Dimension(600, 500)); 
-    	body.setBackground(applet.brightGrey);
-        ButtonGroup categoryGroup = new ButtonGroup();
-    	for (int i=0; i<3; i++) {
-    		radio[i] = new JPanel(new BorderLayout());
-    		radio[i].setBackground(applet.brightGrey);
-    		radio[i].setPreferredSize(new Dimension(500, 140));
-    		
-            ImageIcon map = new ImageIcon(images[i]);
-            JLabel mapLabel = new JLabel(map);
-            mapLabel.setPreferredSize(new Dimension(300, 130));
-            radio[i].add(mapLabel, BorderLayout.WEST);
-            
-            JRadioButton radioButton = new JRadioButton(categories[i]);
-            radioButton.setBackground(applet.brightGrey);
-            radioButton.setFont(new Font(Font.DIALOG, Font.BOLD, 30));
-            categoryGroup.add(radioButton);
-            radio[i].add(radioButton, BorderLayout.EAST);
-            
-            body.add(radio[i]);
-    	}
-    	JPanel buttonPanel = new JPanel(new BorderLayout());
-    	buttonPanel.setPreferredSize(new Dimension(575, 50));
-    	buttonPanel.setBackground(applet.brightGrey);
-		JButton nextPageButton = createNextButton();
-		buttonPanel.add(nextPageButton,BorderLayout.EAST);
-		body.add(buttonPanel);
+    	JPanel body = createBodyPanel();
     	categoryPanel.add(body);
 
 		return categoryPanel;
     }
     
+	private JPanel createBodyPanel() {
+		JPanel body= new JPanel(new FlowLayout());
+    	body.setPreferredSize(new Dimension(600, 510));
+    	body.setBackground(applet.brightGrey);
+    	
+    	//Radio Panel for all categories
+    	JPanel radioPanel = createCategoryRadioPanel();
+    	body.add(radioPanel);
+
+    	//Next Button
+    	JPanel buttonPanel = createButtonPanel();
+		body.add(buttonPanel);
+		
+		return body;
+	}
+
+	private JPanel createCategoryRadioPanel() {
+        JPanel radioPanel = new JPanel(new FlowLayout());
+        radioPanel.setBackground(applet.brightGrey);
+        radioPanel.setPreferredSize(new Dimension(600, 440));
+    	//There are 3 radio buttons. One for each category
+        ButtonGroup categoryGroup = new ButtonGroup();
+    	for (int i=0; i<3; i++) {
+        	//Create and store radio panel in radio[] attribute
+    		radio[i] = new JPanel(new BorderLayout());
+    		radio[i].setBackground(applet.brightGrey);
+    		radio[i].setPreferredSize(new Dimension(500, 140));
+    		
+    		//Create image for radio panel
+            ImageIcon map = new ImageIcon(images[i]);
+            JLabel mapLabel = new JLabel(map);
+            mapLabel.setPreferredSize(new Dimension(300, 130));
+            radio[i].add(mapLabel, BorderLayout.WEST);
+            
+            //Create radio button for radio panel
+            JRadioButton radioButton = new JRadioButton(categories[i]);
+            radioButton.setBackground(applet.brightGrey);
+            radioButton.setFont(new Font(Font.DIALOG, Font.BOLD, 30));
+            categoryGroup.add(radioButton); //Add the radio button to the same category
+            radio[i].add(radioButton, BorderLayout.EAST);
+            
+            radioPanel.add(radio[i]);
+    	}		
+    	return radioPanel;
+	}
+	
+	//Create a border layout to place button on right side
+	//Without this function, button will appear in the middle.
+	//Because the parent body panel has FlowLayout
+	private JPanel createButtonPanel() {
+    	JPanel buttonPanel = new JPanel(new BorderLayout());
+    	buttonPanel.setPreferredSize(new Dimension(575, 50));
+    	buttonPanel.setBackground(applet.brightGrey);
+		JButton nextPageButton = createNextButton();
+		//Place button to the right
+		buttonPanel.add(nextPageButton,BorderLayout.EAST);
+		return buttonPanel;
+	}
+
 	private JButton createNextButton() {
 		JButton nextPageButton = new JButton("Next");
 		nextPageButton.setPreferredSize(new Dimension(100,50));
 		nextPageButton.setFont(new Font(Font.DIALOG, Font.BOLD, 18));
+		
+        //When click, the button will...
 		nextPageButton.addActionListener( e-> {
-
+            // Retrieve data
+			String categoryData = retrieveCategoryData();
             // If data is invalid, show error message
-			String category = retrieveCategory();
-            if (category=="") {
+            if (isInvalid(categoryData)) {
+            	//Display error message
                 JOptionPane.showMessageDialog(null, "Please Select a Category!", "Error", JOptionPane.ERROR_MESSAGE);
             }
             // Else save the data into applet go to the next panel
             else {
-                applet.categoryData = category;
+                applet.categoryData = categoryData;
                 applet.showPanel(NEXT_PANEL_NUMBER);
             }
 		});
 	    return nextPageButton;
 	}
-    private String retrieveCategory() {
-    	String category = "";
+	
+	//Created for consistency's sake with formPanel and merchPanel
+    private boolean isInvalid(String categoryData) {
+		return categoryData=="";
+	}
+
+	private String retrieveCategoryData() {
+    	//Retrieve radio button for 3km, 7km, 10km
 		JRadioButton km3 = (JRadioButton) radio[0].getComponent(1);
 		JRadioButton km7 = (JRadioButton) radio[1].getComponent(1);
 		JRadioButton km10 = (JRadioButton) radio[2].getComponent(1);
-
+		
+		//Check for selected button
 		if (km3.isSelected()) {
-			category = "3km";
+			return "3km";
 		} else if (km7.isSelected()) {
-			category = "7km";
+			return "7km";
 		} else if (km10.isSelected()){
-			category = "10km";
+			return "10km";
 		}
-		return category;
+		//Return empty string if none is selected
+		return "";
     }
 }

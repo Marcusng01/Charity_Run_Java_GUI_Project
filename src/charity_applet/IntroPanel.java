@@ -21,43 +21,73 @@ public class IntroPanel{
     	JPanel introPanel = new JPanel(new FlowLayout());
     	introPanel.setBackground(applet.grey);
     	
-    	//Header
-    	JPanel header = new JPanel(new BorderLayout());
-    	header.setPreferredSize(new Dimension(600, 250));
-    	header.setBackground(applet.grey);
-        ImageIcon logo = new ImageIcon("image/page1/logo.png");
-        JLabel logoLabel = new JLabel(logo);
-        header.add(logoLabel,BorderLayout.CENTER);
+        // Header
+        JPanel header = createHeaderPanel();
         introPanel.add(header);
 
-    	
-    	//Body
-    	JPanel body = new JPanel(new FlowLayout());
-    	body.setBackground(applet.grey);
-        JEditorPane aboutUsTextBox = applet.createTextBox(aboutUs);
-        aboutUsTextBox.setPreferredSize(new Dimension(400,200));
-        aboutUsTextBox.setFont(new Font(Font.DIALOG, Font.PLAIN, 20));
-    	body.add(aboutUsTextBox);
-    	introPanel.add(body);
+        // Body
+        JPanel body = createBodyPanel();
+        introPanel.add(body);
         
-    	//Footer
-    	JPanel footer = new JPanel(new FlowLayout());
-    	footer.setPreferredSize(new Dimension(400,200));
-    	footer.setBackground(applet.grey);
-		JButton nextPageButton = createNextButton();
-		footer.add(nextPageButton,BorderLayout.CENTER);
-    	introPanel.add(footer);
-    	
-    	return introPanel;
+        // Footer
+        JPanel footer = createFooterPanel();
+        introPanel.add(footer);
+
+        return introPanel;
+
     }
 	
 
     
+	private JPanel createHeaderPanel() {
+    	JPanel header = new JPanel(new BorderLayout());
+    	header.setPreferredSize(new Dimension(600, 250));
+    	header.setBackground(applet.grey);
+    	
+    	//Get image from folder
+        ImageIcon logo = new ImageIcon("image/page1/logo.png");
+        JLabel logoLabel = new JLabel(logo);
+        
+        //Add image to header panel
+        header.add(logoLabel,BorderLayout.CENTER);
+        
+        return header;
+	}
+
+	private JPanel createBodyPanel() {
+    	JPanel body = new JPanel(new FlowLayout());
+    	body.setBackground(applet.grey);
+    	
+    	//Create text box using applet function
+        JEditorPane aboutUsTextBox = applet.createTextBox(aboutUs);
+        aboutUsTextBox.setPreferredSize(new Dimension(400,200));		//Set size
+        aboutUsTextBox.setFont(new Font(Font.DIALOG, Font.PLAIN, 20));	//Set font
+        aboutUsTextBox.setBackground(applet.grey);						//Set background color
+        
+        //Add textbox to body panel
+    	body.add(aboutUsTextBox);
+    	
+    	return body;
+	}
+
+	private JPanel createFooterPanel() {
+    	JPanel footer = new JPanel(new FlowLayout());
+    	footer.setPreferredSize(new Dimension(400,200));
+    	footer.setBackground(applet.grey);
+    	
+    	//Create next page button
+		JButton nextPageButton = createNextButton();
+		//Add next page button to footer panel
+		footer.add(nextPageButton,BorderLayout.CENTER);
+		
+    	return footer;
+	}
+
 	private JButton createNextButton() {
 		JButton nextPageButton = new JButton("Register Now!");
-		nextPageButton.setPreferredSize(new Dimension(200,100));
-		nextPageButton.setFont(new Font(Font.DIALOG, Font.PLAIN, 25));
-		nextPageButton.addActionListener( e-> {
+		nextPageButton.setPreferredSize(new Dimension(200,100));		//Set size
+		nextPageButton.setFont(new Font(Font.DIALOG, Font.PLAIN, 25));	//Set font
+		nextPageButton.addActionListener( e-> {							//Show next page
 			applet.showPanel(NEXT_PANEL_NUMBER);
 			
 		});

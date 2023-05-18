@@ -1,6 +1,9 @@
 package charity_applet;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
 
 import javax.swing.*;
 
@@ -14,6 +17,7 @@ public class CharityRunApplet extends JFrame {
     protected JPanel receiptPanel;
     protected Color grey = Color.decode("#cbcdbf");
     protected Color brightGrey = Color.decode("#f0ebe5");
+    protected Color black = Color.decode("#474747");
     protected String[] formData = new String[9];
     protected String categoryData;
     protected boolean[] merchandiseData = new boolean[7];
@@ -64,12 +68,36 @@ public class CharityRunApplet extends JFrame {
     	JEditorPane textBox = new JEditorPane();
     	textBox.setContentType("text/html"); // Set content type to HTML
     	textBox.setEditable(false); // Disable editing
-    	textBox.setText(text);
-    	textBox.setBorder(null);
-    	textBox.setBackground(grey);
+    	textBox.setText(text); // Make it display text
+    	textBox.setBorder(null); // Remove border
     	textBox.putClientProperty(JEditorPane.HONOR_DISPLAY_PROPERTIES, Boolean.TRUE); //Ensure that the font applies
 		return textBox;
     }
+    
+    protected JPanel createHeaderPanel(String title) {
+        JPanel header = new JPanel(new BorderLayout());
+        header.setPreferredSize(new Dimension(600, 100));
+        header.setBackground(grey);
+        
+        // Label for header
+        JLabel titleLabel = new JLabel(title);
+        titleLabel.setFont(new Font(Font.DIALOG, Font.BOLD, 30));
+        titleLabel.setHorizontalAlignment(JLabel.CENTER);
+        header.add(titleLabel, BorderLayout.CENTER);
+        
+        // Logo
+        ImageIcon logo = new ImageIcon("image/page3/logo.png");
+        JLabel logoLabel = new JLabel(logo);
+        header.add(logoLabel, BorderLayout.EAST);
+        
+        // Spacer to make the title appear in the middle
+        JLabel spacer = new JLabel();
+        spacer.setPreferredSize(new Dimension(logo.getIconWidth(), logo.getIconHeight()));
+        header.add(spacer, BorderLayout.WEST);
+
+        return header;
+    }
+    
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
