@@ -92,7 +92,7 @@ public class FormPanel {
 		body.setPreferredSize(new Dimension(300, 280));
 		body.setBackground(applet.brightGrey);
 
-		//There are 8 form panels. One for each field
+		//There are 5 form panels. One for each field
         for (int i = 0; i < 5; i++) {
         	//Create and store form panel in formPanels[] attribute
             formPanels[i] = new JPanel(new FlowLayout());

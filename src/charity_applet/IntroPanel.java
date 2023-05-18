@@ -11,6 +11,8 @@ public class IntroPanel{
     private final int NEXT_PANEL_NUMBER = 1;
     private String aboutUs= "<html style='text-align: justify;'>"
     		+"Charity Run 2023 is a meaningful event organized by UTHM students with the aim of raising funds to support the victims affected by the devastating floods. We extend a warm invitation to all individuals who are passionate about making a difference through running!"
+    		+"<br><br>"
+    		+ "Do join us on 8am, August 20th 2023 at the UTHM football field."
     		+ "</html>";
     		
     public IntroPanel(CharityRunApplet a) {
@@ -41,7 +43,7 @@ public class IntroPanel{
     
 	private JPanel createHeaderPanel() {
     	JPanel header = new JPanel(new BorderLayout());
-    	header.setPreferredSize(new Dimension(600, 250));
+    	header.setPreferredSize(new Dimension(600, 200));
     	header.setBackground(applet.grey);
     	
     	//Get image from folder
@@ -60,7 +62,7 @@ public class IntroPanel{
     	
     	//Create text box using applet function
         JEditorPane aboutUsTextBox = applet.createTextBox(aboutUs);
-        aboutUsTextBox.setPreferredSize(new Dimension(400,200));		//Set size
+        aboutUsTextBox.setPreferredSize(new Dimension(400,270));		//Set size
         aboutUsTextBox.setFont(new Font(Font.DIALOG, Font.PLAIN, 20));	//Set font
         aboutUsTextBox.setBackground(applet.grey);						//Set background color
         
@@ -89,7 +91,6 @@ public class IntroPanel{
 		nextPageButton.setFont(new Font(Font.DIALOG, Font.PLAIN, 25));	//Set font
 		nextPageButton.addActionListener( e-> {							//Show next page
 			applet.showPanel(NEXT_PANEL_NUMBER);
-			
 		});
 	    return nextPageButton;
 	}

@@ -72,39 +72,36 @@ public class ReceiptPanel {
         JPanel formInfoPanel = new JPanel();
         formInfoPanel.setPreferredSize(new Dimension(350, 120));
         formInfoPanel.setBackground(applet.brightGrey);
-
-        //retrieve form data
-        String name = applet.formData[0];
-        String email = applet.formData[3];
-        String phone = applet.formData[4];
         
         //Create header for form data
         JLabel headerLabel = new JLabel("Runner: ");
-        //Create labels for form data
-        JLabel nameLabel = new JLabel("Name:" + name);
-        JLabel emailLabel = new JLabel("Email: " + email);
-        JLabel phoneLabel = new JLabel("Phone: " + phone);
-        
-        //Set size for header
         headerLabel.setPreferredSize(new Dimension(310, 20));
-        //Set size for labels
-        nameLabel.setPreferredSize(new Dimension(310, 20));
-        emailLabel.setPreferredSize(new Dimension(310, 20));
-        phoneLabel.setPreferredSize(new Dimension(310, 20));
-
-        //Set font for header
         Font headerFont = new Font(Font.DIALOG, Font.BOLD, 20);
         headerLabel.setFont(headerFont);
-        //set font for labels
-        Font labelFont = new Font(Font.DIALOG, Font.PLAIN, 16);
-        nameLabel.setFont(labelFont);
-        emailLabel.setFont(labelFont);
-        phoneLabel.setFont(labelFont);
-        
-        // Add header and labels to form info panel
         formInfoPanel.add(headerLabel);
+
+        //font for lables
+        Font labelFont = new Font(Font.DIALOG, Font.PLAIN, 16);
+
+        //Create FULL NAME labels from form data
+        String name = applet.formData[0];
+        JLabel nameLabel = new JLabel("Name:" + name);
+        nameLabel.setPreferredSize(new Dimension(310, 20));
+        nameLabel.setFont(labelFont);
         formInfoPanel.add(nameLabel);
+
+        //Create EMAIL labels from form data
+        String email = applet.formData[3];
+        JLabel emailLabel = new JLabel("Email: " + email);
+        emailLabel.setPreferredSize(new Dimension(310, 20));
+        emailLabel.setFont(labelFont);
         formInfoPanel.add(emailLabel);
+
+        //Create PHONE NUMBER labels from form data
+        String phone = applet.formData[4];
+        JLabel phoneLabel = new JLabel("Phone: " + phone);
+        phoneLabel.setPreferredSize(new Dimension(310, 20));
+        phoneLabel.setFont(labelFont);
         formInfoPanel.add(phoneLabel);
         
         return formInfoPanel;
@@ -120,24 +117,17 @@ public class ReceiptPanel {
         
         //Create header for form data
         JLabel headerLabel = new JLabel("Category:");
+        Font headerFont = new Font(Font.DIALOG, Font.BOLD, 20);
+        headerLabel.setFont(headerFont);
+        categoryInfoPanel.add(headerLabel);
+
         // Create label for category data
         JLabel categoryLabel = new JLabel(category);
-        
-        //Set size and alignment for labels
         headerLabel.setPreferredSize(new Dimension(190, 25));
         categoryLabel.setPreferredSize(new Dimension(190, 60));
         categoryLabel.setHorizontalAlignment(JLabel.CENTER);
-        
-        //Set font for header
-        Font headerFont = new Font(Font.DIALOG, Font.BOLD, 20);
-        headerLabel.setFont(headerFont);
-        // Set font and alignment for label
         Font labelFont = new Font(Font.DIALOG, Font.PLAIN, 20);
         categoryLabel.setFont(labelFont);
-        
-        //Add header to category info panel
-        categoryInfoPanel.add(headerLabel);
-        // Add label to category info panel
         categoryInfoPanel.add(categoryLabel);
         
         return categoryInfoPanel;
@@ -150,8 +140,6 @@ public class ReceiptPanel {
         
         // Create table for merchandise data
         JTable merchTable = createMerchandiseTable();
-        
-        // Add table to merch info panel
         merchInfoPanel.add(new JScrollPane(merchTable), BorderLayout.CENTER);
         
         return merchInfoPanel;
@@ -194,7 +182,6 @@ public class ReceiptPanel {
     private JLabel createTotalPanel() {
         // Retrieve merchandise data
         boolean[] merchandiseData = applet.merchandiseData;
-        
         // Calculate total price using calculateTotalPrice()
         String totalPrice = calculateTotalPrice(merchandiseData);
         
@@ -248,14 +235,14 @@ public class ReceiptPanel {
             ImageIcon icon = new ImageIcon(images[i]);
             JLabel iconLabel = new JLabel(icon);
             iconLabel.setPreferredSize(new Dimension(50, 35));
+        	row.add(iconLabel);
+
     		//Create reassurance text box
         	JEditorPane reassuranceText = applet.createTextBox(reassurance[i]);
         	reassuranceText.setPreferredSize(new Dimension(500, 35));
         	reassuranceText.setBackground(applet.brightGrey);
-        	
-        	//Add icon and textbox to row
-        	row.add(iconLabel);
         	row.add(reassuranceText);
+        	
         	//Add row to reassurance panel
         	reassurancePanel.add(row);
     	}
@@ -264,13 +251,13 @@ public class ReceiptPanel {
     }
 
     private JPanel createFooterPanel() {
-        JPanel footer = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        JPanel footer = new JPanel(new BorderLayout());
         footer.setPreferredSize(new Dimension(600, 50));
         footer.setBackground(applet.grey);
 
         // Create Next button
         JButton nextPageButton = createNextButton();
-        footer.add(nextPageButton);
+        footer.add(nextPageButton,BorderLayout.EAST);
         
         return footer;
     }
@@ -279,6 +266,7 @@ public class ReceiptPanel {
         JButton nextPageButton = new JButton("EXIT");
         nextPageButton.setPreferredSize(new Dimension(100, 40));
         nextPageButton.setFont(new Font(Font.DIALOG, Font.BOLD, 18));
+        
         nextPageButton.addActionListener(e -> {
             // Get the top-level parent window
             Window window = SwingUtilities.getWindowAncestor(nextPageButton);
