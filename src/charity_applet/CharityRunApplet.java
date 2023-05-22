@@ -27,9 +27,7 @@ public class CharityRunApplet extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(700, 700);
         setLocationRelativeTo(null);
-
         showPanel(0); // Display the first panel
-
     }
 
     protected void showPanel(int PanelNumber) {

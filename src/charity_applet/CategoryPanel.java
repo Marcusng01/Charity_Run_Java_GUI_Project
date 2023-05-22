@@ -10,7 +10,7 @@ import javax.swing.*;
 public class CategoryPanel {
     private CharityRunApplet applet;
     private final int NEXT_PANEL_NUMBER = 3;
-	private JPanel[] radio = new JPanel[3];
+	private JRadioButton[] radioButtons = new JRadioButton[3];
 	private String[] images = {
 			"image/page3/3km.png",
 			"image/page3/7km.png",
@@ -65,24 +65,24 @@ public class CategoryPanel {
         ButtonGroup categoryGroup = new ButtonGroup();
     	for (int i=0; i<3; i++) {
         	//Create and store radio panel in radio[] attribute
-    		radio[i] = new JPanel(new BorderLayout());
-    		radio[i].setBackground(applet.brightGrey);
-    		radio[i].setPreferredSize(new Dimension(500, 140));
+    		JPanel radio = new JPanel(new BorderLayout());
+    		radio.setBackground(applet.brightGrey);
+    		radio.setPreferredSize(new Dimension(500, 140));
     		
     		//Create image for radio panel
             ImageIcon map = new ImageIcon(images[i]);
             JLabel mapLabel = new JLabel(map);
             mapLabel.setPreferredSize(new Dimension(300, 130));
-            radio[i].add(mapLabel, BorderLayout.WEST);
+            radio.add(mapLabel, BorderLayout.WEST);
             
             //Create radio button for radio panel
-            JRadioButton radioButton = new JRadioButton(categories[i]);
-            radioButton.setBackground(applet.brightGrey);
-            radioButton.setFont(new Font(Font.DIALOG, Font.BOLD, 30));
-            categoryGroup.add(radioButton); //Add the radio button to the same category
-            radio[i].add(radioButton, BorderLayout.EAST);
+            radioButtons[i] = new JRadioButton(categories[i]);
+            radioButtons[i].setBackground(applet.brightGrey);
+            radioButtons[i].setFont(new Font(Font.DIALOG, Font.BOLD, 30));
+            categoryGroup.add(radioButtons[i]); //Add the radio button to the same category
+            radio.add(radioButtons[i], BorderLayout.EAST);
             
-            radioPanel.add(radio[i]);
+            radioPanel.add(radio);
     	}		
     	return radioPanel;
 	}
@@ -130,9 +130,9 @@ public class CategoryPanel {
 
 	private String retrieveCategoryData() {
     	//Retrieve radio button for 3km, 7km, 10km
-		JRadioButton km3 = (JRadioButton) radio[0].getComponent(1);
-		JRadioButton km7 = (JRadioButton) radio[1].getComponent(1);
-		JRadioButton km10 = (JRadioButton) radio[2].getComponent(1);
+		JRadioButton km3 = (JRadioButton) radioButtons[0];
+		JRadioButton km7 = (JRadioButton) radioButtons[1];
+		JRadioButton km10 = (JRadioButton) radioButtons[2];
 		
 		//Check for selected button
 		if (km3.isSelected()) {

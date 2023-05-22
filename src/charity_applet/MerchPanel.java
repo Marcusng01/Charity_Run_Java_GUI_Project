@@ -4,14 +4,16 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 import javax.swing.*;
 
 public class MerchPanel {
     private CharityRunApplet applet;
     private final int NEXT_PANEL_NUMBER = 4;
-    //Stores panels for the merchandise for data retrieval
-	private JPanel[] merchPanels = new JPanel[7];
+    //Stores check boxes for the merchandise for data retrieval
+	private JCheckBox[] checkBoxes = new JCheckBox[7];
 	private String[]images = {
 			"image/page4/t-shirt.png",
 			"image/page4/waterbottle.png",
@@ -60,14 +62,14 @@ public class MerchPanel {
     	for (int i=0; i<7; i++) {
     		JPanel singleMerchandise = createSingleMerchandisePanel(i);
     		body.add(singleMerchandise);
-    		// Store merchandise panel into merchPanels for data retrieva
-    		merchPanels[i] = singleMerchandise;	
         }
     	
-        //spacer between raffle and next button
-        JLabel spacer2 = new JLabel();
-        spacer2.setPreferredSize(new Dimension(175, 110));
-        body.add(spacer2);
+        //Add text between raffle and next button
+        JEditorPane information = applet.createTextBox("<div style='padding: 15px;'>Reminder:<br>T-Shirts and raffles<br>are compulsory :)</div>");
+        information.setFont(new Font(Font.DIALOG, Font.PLAIN, 16));	//Set font
+        information.setPreferredSize(new Dimension(175, 110));
+        information.setBackground(applet.brightGrey);
+        body.add(information);
         
 		//Next button
 		JButton nextPageButton = createNextButton();
@@ -85,25 +87,37 @@ public class MerchPanel {
 			singleMerchandise.setPreferredSize(new Dimension(175, 110));
 		else
 			singleMerchandise.setPreferredSize(new Dimension(175, 180));
-		
-		//Check box to select merchandise
-		//Retrieve label for checkbox from itemName attribute
-		JCheckBox checkbox = new JCheckBox(itemName[index]);
-		checkbox.setBackground(applet.brightGrey);
-		checkbox.setPreferredSize(new Dimension(150, 20));
-		checkbox.setFont(new Font(Font.DIALOG, Font.BOLD, 17));
-		checkbox.setHorizontalAlignment(JLabel.CENTER);
-		singleMerchandise.add(checkbox, BorderLayout.NORTH);
-        
+
+		//Check box to select merchandise (store in checkboxes attribute to retrieve input in the future)
+		checkBoxes[index] = new JCheckBox(itemName[index]);		//Retrieve label for check box from itemName attribute
+		checkBoxes[index].setBackground(applet.brightGrey);
+		checkBoxes[index].setPreferredSize(new Dimension(150, 20));
+		checkBoxes[index].setFont(new Font(Font.DIALOG, Font.BOLD, 17));
+		checkBoxes[index].setHorizontalAlignment(JLabel.CENTER);
+		if (index == 0 || index == 6) {
+			setAlwaysSelected(checkBoxes[index]);
+		}
+		singleMerchandise.add(checkBoxes[index], BorderLayout.NORTH);
+
         //Image for merchandise
-		//Retrieve image for checkbox from images attribute
-        ImageIcon item = new ImageIcon(images[index]);
+        ImageIcon item = new ImageIcon(images[index]);		//Retrieve image for check box from images attribute
         JLabel itemLabel = new JLabel(item);
         singleMerchandise.add(itemLabel, BorderLayout.CENTER);
-        
+
         return singleMerchandise;
 	}
 
+
+	private void setAlwaysSelected(JCheckBox checkBox) {
+		checkBox.setSelected(true);
+		checkBox.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                // Set the checkbox state to selected regardless of user interaction
+                checkBox.setSelected(true);
+            }
+        });
+	}
 
 	private JButton createNextButton() {
         JButton nextPageButton = new JButton("Next");
@@ -114,7 +128,7 @@ public class MerchPanel {
         nextPageButton.addActionListener(e -> {
             // Retrieve data
             boolean[] merchandiseData = retrieveMerchandiseData();
-            // If no checkbox is selected, show error message
+            // If no check box is selected, show error message
             if (isInvalid(merchandiseData)) {
                 JOptionPane.showMessageDialog(null, "Please select at least one merchandise!", "Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -131,7 +145,7 @@ public class MerchPanel {
 	private boolean[] retrieveMerchandiseData(){        
         boolean[] merchandiseData = new boolean[7];
         for (int i = 0; i < 7; i++) {
-            JCheckBox checkbox = (JCheckBox) ((JPanel) merchPanels[i]).getComponent(0);
+            JCheckBox checkbox = (JCheckBox) checkBoxes[i];
             merchandiseData[i] = checkbox.isSelected();
         }
         return merchandiseData;
